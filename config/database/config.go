@@ -8,7 +8,7 @@ import (
 )
 
 // Config holds application configuration
-type Config struct {
+type ConfigDB struct {
 	DBHost     string
 	DBPort     string
 	DBUser     string
@@ -17,14 +17,14 @@ type Config struct {
 }
 
 // LoadConfig loads application configuration from .env file
-func LoadConfig() (*Config, error) {
+func LoadConfigDB() (*ConfigDB, error) {
 	// Load environment variables from .env file
 	if err := godotenv.Load(); err != nil {
 		return nil, fmt.Errorf("failed to load .env file: %w", err)
 	}
 
 	// Initialize Config object with environment variables
-	config := &Config{
+	configDB := &ConfigDB{
 		DBHost:     os.Getenv("DB_HOST"),
 		DBPort:     os.Getenv("DB_PORT"),
 		DBUser:     os.Getenv("DB_USER"),
@@ -32,11 +32,11 @@ func LoadConfig() (*Config, error) {
 		DBName:     os.Getenv("DB_NAME"),
 	}
 
-	return config, nil
+	return configDB, nil
 }
 
 // GetDSN returns the MySQL DSN string
-func (c *Config) GetDSN() string {
+func (c *ConfigDB) GetDSN() string {
 	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		c.DBUser, c.DBPassword, c.DBHost, c.DBPort, c.DBName)
 }

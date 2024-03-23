@@ -3,9 +3,10 @@ package controller
 import (
 	"strconv"
 
+	"go-fiber-boilerplate/modules/todo/model"
+	"go-fiber-boilerplate/modules/todo/service"
+
 	"github.com/gofiber/fiber/v2"
-	"github.com/pant411/go-fiber-boilerplate/modules/todo/model"
-	"github.com/pant411/go-fiber-boilerplate/modules/todo/service"
 )
 
 // TodoController handles HTTP requests related to Todo operations
@@ -28,7 +29,7 @@ func NewTodoController(todoService *service.TodoService) *TodoController {
 func (c *TodoController) GetAllTodos(ctx *fiber.Ctx) error {
 	todos, err := c.todoService.GetAllTodos()
 	if err != nil {
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Internal Server Error"})
+		return fiber.NewError(500, err.Error())
 	}
 	return ctx.JSON(todos)
 }
@@ -37,10 +38,10 @@ func (c *TodoController) GetAllTodos(ctx *fiber.Ctx) error {
 func (c *TodoController) CreateTodo(ctx *fiber.Ctx) error {
 	todo := new(model.Todo)
 	if err := ctx.BodyParser(todo); err != nil {
-		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request payload"})
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 	if err := c.todoService.CreateTodo(todo); err != nil {
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create todo"})
+		return fiber.NewError(500, err.Error())
 	}
 	return ctx.JSON(todo)
 }
@@ -49,11 +50,11 @@ func (c *TodoController) CreateTodo(ctx *fiber.Ctx) error {
 func (c *TodoController) GetTodoByID(ctx *fiber.Ctx) error {
 	id, err := strconv.Atoi(ctx.Params("id"))
 	if err != nil {
-		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid todo ID"})
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 	todo, err := c.todoService.GetTodoByID(uint(id))
 	if err != nil {
-		return ctx.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Todo not found"})
+		return fiber.NewError(fiber.StatusNotFound, err.Error())
 	}
 	return ctx.JSON(todo)
 }
@@ -66,11 +67,11 @@ func (c *TodoController) UpdateTodo(ctx *fiber.Ctx) error {
 	}
 	todo := new(model.Todo)
 	if err := ctx.BodyParser(todo); err != nil {
-		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request payload"})
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 	todo.ID = uint(id)
 	if err := c.todoService.UpdateTodo(todo); err != nil {
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update todo"})
+		return fiber.NewError(500, err.Error())
 	}
 	return ctx.JSON(todo)
 }
@@ -79,10 +80,10 @@ func (c *TodoController) UpdateTodo(ctx *fiber.Ctx) error {
 func (c *TodoController) DeleteTodo(ctx *fiber.Ctx) error {
 	id, err := strconv.Atoi(ctx.Params("id"))
 	if err != nil {
-		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid todo ID"})
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 	if err := c.todoService.DeleteTodo(uint(id)); err != nil {
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete todo"})
+		return fiber.NewError(500, err.Error())
 	}
 	return ctx.JSON(fiber.Map{"message": "Todo deleted successfully"})
 }

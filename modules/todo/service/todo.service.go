@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/pant411/go-fiber-boilerplate/modules/todo/model"
-	"github.com/pant411/go-fiber-boilerplate/modules/todo/repository"
+	"go-fiber-boilerplate/modules/todo/model"
+	"go-fiber-boilerplate/modules/todo/repository"
 )
 
 // TodoService handles business logic for todos

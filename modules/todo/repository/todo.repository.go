@@ -1,7 +1,8 @@
 package repository
 
 import (
-	"github.com/pant411/go-fiber-boilerplate/modules/todo/model"
+	"go-fiber-boilerplate/modules/todo/model"
+
 	"gorm.io/gorm"
 )
 

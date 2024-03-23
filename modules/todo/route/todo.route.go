@@ -1,15 +1,16 @@
 package routes
 
 import (
+	"go-fiber-boilerplate/modules/todo/controller"
+	"go-fiber-boilerplate/modules/todo/repository"
+	"go-fiber-boilerplate/modules/todo/service"
+
 	"github.com/gofiber/fiber/v2"
-	"github.com/pant411/go-fiber-boilerplate/modules/todo/controller"
-	"github.com/pant411/go-fiber-boilerplate/modules/todo/repository"
-	"github.com/pant411/go-fiber-boilerplate/modules/todo/service"
 	"gorm.io/gorm"
 )
 
-// SetupTodoRoutes sets up routes for the Todo module
-func SetupTodoRoutes(app *fiber.App, db *gorm.DB) {
+// TodoRoutes sets up routes for the Todo module
+func TodoRoutes(app *fiber.App, db *gorm.DB) {
 	// Initialize repository, service, and controller
 	todoRepo := repository.NewTodoRepository(db)
 	todoService := service.NewTodoService(todoRepo)

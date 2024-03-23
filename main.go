@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/pant411/go-fiber-boilerplate/cmd"
+	"go-fiber-boilerplate/cmd"
 )
 
 func main() {

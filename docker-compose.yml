@@ -18,6 +18,18 @@ services:
     environment:
       - PMA_ARBITRARY=1
 
+  api:
+    container_name: go-fiber-app
+    restart: always
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+      - phpmyadmin
+
 volumes:
   mysql-data:
     driver: local

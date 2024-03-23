@@ -14,25 +14,19 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	fiberSwagger "github.com/swaggo/fiber-swagger"
-
-	_ "github.com/swaggo/fiber-swagger/example/docs"
+	swagger "github.com/arsmn/fiber-swagger/v2"
 )
 
-// @title Swagger Example API
+// @title Fiber Example API
 // @version 1.0
-// @description This is a sample server Petstore server.
+// @description This is a sample swagger for Fiber
 // @termsOfService http://swagger.io/terms/
-
 // @contact.name API Support
-// @contact.url http://www.swagger.io/support
-// @contact.email support@swagger.io
-
+// @contact.email fiber@swagger.io
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-
-// @host petstore.swagger.io
-// @BasePath /v2
+// @host localhost:3000
+// @BasePath /
 
 func Execute() error {
 	// Load configuration
@@ -60,7 +54,7 @@ func Execute() error {
 	// Migrate the database
 	db.AutoMigrate(&model.Todo{})
 
-	app.Get("/swagger/*", fiberSwagger.WrapHandler)
+	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	// Setup routes
 	routes.TodoRoutes(app, db)

@@ -9,7 +9,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// TodoController handles HTTP requests related to Todo operations
 type TodoController struct {
 	todoService *service.TodoService
 }
@@ -19,13 +18,6 @@ func NewTodoController(todoService *service.TodoService) *TodoController {
 	return &TodoController{todoService: todoService}
 }
 
-// @Summary Get all todos
-// @Description Get all todos
-// @Tags Todos
-// @Accept json
-// @Produce json
-// @Success 200 {array} Todo
-// @Router /api/todo [get]
 func (c *TodoController) GetAllTodos(ctx *fiber.Ctx) error {
 	todos, err := c.todoService.GetAllTodos()
 	if err != nil {

@@ -1,0 +1,48 @@
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+*.so
+
+# Folders
+_obj
+_test
+_vendor
+
+
+# Compiled binary executables
+*.exe
+*.out
+
+# Compiled Go packages
+*.test
+
+# Output of the go coverage tool
+*.coverprofile
+
+# macOS specific files
+.DS_Store
+
+# Compiled Go files
+*.test
+*.prof
+
+# Dependency directories (remove if using Go modules)
+vendor/
+
+# Go generated files
+*.pb.go
+*.pb.gw.go
+
+# Fiber specific logs
+log/
+
+# End of file
+
+# docker volumn
+mysql-data/
+
+# env
+.env
+
+# bin
+bin/

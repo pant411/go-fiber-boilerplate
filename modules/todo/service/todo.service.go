@@ -31,8 +31,8 @@ func (s *TodoService) GetTodoByID(id uint) (*model.Todo, error) {
 }
 
 // UpdateTodo updates an existing todo
-func (s *TodoService) UpdateTodo(todo *model.Todo) error {
-	return s.todoRepo.UpdateTodo(todo)
+func (s *TodoService) UpdateTodo(id uint, todo *model.Todo) error {
+	return s.todoRepo.UpdateTodo(id, todo)
 }
 
 func (s *TodoService) DeleteTodo(id uint) error {

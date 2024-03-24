@@ -24,7 +24,6 @@ func AllException(ctx *fiber.Ctx, err error) error {
 	}
 
 	// Send custom error page
-	// err = ctx.Status(code).SendFile(fmt.Sprintf("./%d.html", code))
 	if err != nil {
 		// In case the SendFile fails
 		return ctx.Status(code).JSON(GlobalErrorHandlerResp{

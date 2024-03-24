@@ -1,10 +1,10 @@
 package controller
 
 import (
-	"strconv"
-
+	"go-fiber-boilerplate/helpers/validation"
 	"go-fiber-boilerplate/modules/todo/model"
 	"go-fiber-boilerplate/modules/todo/service"
+	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -32,6 +32,12 @@ func (c *TodoController) CreateTodo(ctx *fiber.Ctx) error {
 	if err := ctx.BodyParser(todo); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
+
+	// Validate the User struct
+	if err := validation.ValidateStruct(todo); err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error()) // Validation error will be handled by the custom error handler middleware
+	}
+
 	if err := c.todoService.CreateTodo(todo); err != nil {
 		return fiber.NewError(500, err.Error())
 	}
@@ -58,11 +64,17 @@ func (c *TodoController) UpdateTodo(ctx *fiber.Ctx) error {
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid todo ID"})
 	}
 	todo := new(model.Todo)
+
 	if err := ctx.BodyParser(todo); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
+
+	// Validate the User struct
+	if err := validation.ValidateStruct(todo); err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error()) // Validation error will be handled by the custom error handler middleware
+	}
 	todo.ID = uint(id)
-	if err := c.todoService.UpdateTodo(todo); err != nil {
+	if err := c.todoService.UpdateTodo(todo.ID, todo); err != nil {
 		return fiber.NewError(500, err.Error())
 	}
 	return ctx.JSON(todo)

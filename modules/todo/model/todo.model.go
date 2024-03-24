@@ -1,16 +1,11 @@
 package model
 
 import (
-	"time"
-
 	"gorm.io/gorm"
 )
 
 type Todo struct {
-	ID        uint           `gorm:"primarykey" json:"id"`
-	Title     string         `json:"title"`
-	Completed bool           `json:"completed"`
-	CreatedAt time.Time      `json:"createdAt"`
-	UpdatedAt time.Time      `json:"updatedAt"`
-	DeletedAt gorm.DeletedAt `gorm:"index" json:"deletedAt"`
+	gorm.Model
+	Title     string `validate:"required_on_create,optional_on_update" json:"title"`
+	Completed bool   `json:"completed"`
 }

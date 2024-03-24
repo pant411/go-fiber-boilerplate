@@ -3,11 +3,11 @@ package main
 import (
 	"log"
 
-	"go-fiber-boilerplate/cmd"
+	"go-fiber-boilerplate/app"
 )
 
 func main() {
-	if err := cmd.Execute(); err != nil {
+	if err := app.Execute(); err != nil {
 		log.Fatalf("failed to start the application: %v", err)
 	}
 }

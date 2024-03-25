@@ -16,20 +16,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-
-	swagger "github.com/arsmn/fiber-swagger/v2"
 )
-
-// @title Fiber Example API
-// @version 1.0
-// @description This is a sample swagger for Fiber
-// @termsOfService http://swagger.io/terms/
-// @contact.name API Support
-// @contact.email fiber@swagger.io
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-// @host localhost:3000
-// @BasePath /
 
 func Execute() error {
 	// Load configuration
@@ -56,8 +43,6 @@ func Execute() error {
 
 	// Migrate the database
 	db.AutoMigrate(&modelTodo.Todo{}, &modelUser.User{})
-
-	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	// Setup routes
 	routeTodo.TodoRoutes(app, db)

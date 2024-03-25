@@ -44,6 +44,10 @@ func Execute() error {
 	// Migrate the database
 	db.AutoMigrate(&modelTodo.Todo{}, &modelUser.User{})
 
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Hello, World!")
+	})
+
 	// Setup routes
 	routeTodo.TodoRoutes(app, db)
 	routeAuth.AuthRoutes(app, db)

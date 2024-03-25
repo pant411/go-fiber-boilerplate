@@ -6,8 +6,11 @@ import (
 	"go-fiber-boilerplate/helpers/errorHandler"
 
 	"go-fiber-boilerplate/middlewares/response"
-	"go-fiber-boilerplate/modules/todo/model"
-	routes "go-fiber-boilerplate/modules/todo/route"
+	routeAuth "go-fiber-boilerplate/modules/auth/route"
+	modelTodo "go-fiber-boilerplate/modules/todo/model"
+	routeTodo "go-fiber-boilerplate/modules/todo/route"
+	modelUser "go-fiber-boilerplate/modules/user/model"
+	routeUser "go-fiber-boilerplate/modules/user/route"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -52,12 +55,14 @@ func Execute() error {
 	}
 
 	// Migrate the database
-	db.AutoMigrate(&model.Todo{})
+	db.AutoMigrate(&modelTodo.Todo{}, &modelUser.User{})
 
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	// Setup routes
-	routes.TodoRoutes(app, db)
+	routeTodo.TodoRoutes(app, db)
+	routeAuth.AuthRoutes(app, db)
+	routeUser.UserRoutes(app, db)
 
 	// Start the server
 	if err := app.Listen(fmt.Sprintf(":%s", PORT)); err != nil {

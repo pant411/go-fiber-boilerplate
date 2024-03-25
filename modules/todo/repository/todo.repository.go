@@ -41,7 +41,7 @@ func (r *TodoRepository) GetTodoByID(id uint) (*model.Todo, error) {
 
 // UpdateTodo updates an existing todo
 func (r *TodoRepository) UpdateTodo(id uint, todo *model.Todo) error {
-	return r.db.Where("id = ?", todo.ID).Updates(todo).Error
+	return r.db.Where("id = ?", id).Updates(todo).Error
 }
 
 // DeleteTodo deletes a todo

@@ -1,18 +1,10 @@
 package validation
 
 import (
-	"github.com/go-playground/validator/v10"
+	"net/mail"
 )
 
-func ValidateStruct(field interface{}) error {
-	// Create a new validator instance
-	validate := validator.New()
-
-	// Validate the struct
-	if err := validate.Struct(field); err != nil {
-		// Return validation error
-		return err
-	}
-
-	return nil
+func ValidationEmail(email string) bool {
+	_, err := mail.ParseAddress(email)
+	return err == nil
 }
